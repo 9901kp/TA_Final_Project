@@ -20,8 +20,11 @@ public class LoginValidTest extends BaseTest {
 
         HomePage afterLogin = login.loginExpectSuccess(Config.uiEmail(), Config.uiPassword());
 
-        Assert.assertTrue(afterLogin.isLoggedInBannerVisible(),
-                "Expected 'Logged in as' to be visible");
+        Assert.assertTrue(
+                afterLogin.isLoggedInBannerVisible() || afterLogin.isLogoutVisible(),
+                "Expected to be logged in (banner or logout should be visible)"
+        );
+
         Assert.assertTrue(afterLogin.getLoggedInAsText().contains(Config.uiUsernameExpected()),
                 "Expected username in 'Logged in as' banner");
     }

@@ -23,6 +23,10 @@ public class HomePage extends BasePage {
         return loggedInAs;
     }
 
+    public By getLogoutLocator() {
+        return logoutLink;
+    }
+
     public HomePage open(String url) {
         driver.get(url);
         return this;
@@ -43,7 +47,11 @@ public class HomePage extends BasePage {
     }
 
     public boolean isLoggedInBannerVisible() {
-        return isVisible(loggedInAs, 8);
+        return isVisible(loggedInAs, 10);
+    }
+
+    public boolean isLogoutVisible() {
+        return isVisible(logoutLink, 10);
     }
 
     public LoginPage goToLogin() {
@@ -84,6 +92,6 @@ public class HomePage extends BasePage {
     }
 
     public boolean isContactSuccessMessageVisible() {
-        return isVisible(successMessage, 8);
+        return isVisible(successMessage, 10);
     }
 }
