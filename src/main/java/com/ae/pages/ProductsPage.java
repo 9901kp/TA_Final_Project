@@ -27,7 +27,11 @@ public class ProductsPage extends BasePage {
             By.cssSelector(".features_items .productinfo p");
 
     public ProductsPage waitLoaded() {
-        visible(allProductsTitle);
+        waitUrlContains("/products");
+        waitAnyVisible(
+                By.id("search_product"),
+                By.xpath("//h2[contains(text(),'All Products')]")
+        );
         return this;
     }
 

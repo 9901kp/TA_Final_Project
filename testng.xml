@@ -1,18 +1,24 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="AutomationExercise Suite" parallel="classes" thread-count="4">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="TestSuite" verbose="1">
 
-    <parameter name="browser" value="chrome"/>
-
-    <test name="UI Tests">
-        <packages>
-            <package name="com.ae.ui.tests.*"/>
-        </packages>
+    <test name="UI Tests" parallel="false">
+        <classes>
+            <class name="com.ae.ui.tests.auth.LoginValidTest"/>
+            <class name="com.ae.ui.tests.auth.LoginInvalidTest"/>
+            <class name="com.ae.ui.tests.auth.LogoutTest"/>
+            <class name="com.ae.ui.tests.contact.ContactUsTest"/>
+            <class name="com.ae.ui.tests.products.AllProductsTest"/>
+            <class name="com.ae.ui.tests.products.SearchProductUiTest"/>
+        </classes>
     </test>
 
-    <test name="API Tests">
-        <packages>
-            <package name="com.ae.api.tests.*"/>
-        </packages>
+    <test name="API Tests" parallel="methods" thread-count="4">
+        <classes>
+            <class name="com.ae.api.tests.BrandsApiTests"/>
+            <class name="com.ae.api.tests.ProductsApiTests"/>
+            <class name="com.ae.api.tests.SearchProductApiTests"/>
+            <class name="com.ae.api.tests.VerifyLoginApiTests"/>
+        </classes>
     </test>
 
 </suite>
