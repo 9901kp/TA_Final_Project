@@ -6,6 +6,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.TimeoutException;
+
 
 import java.time.Duration;
 
@@ -139,6 +141,14 @@ public abstract class BasePage {
             return el.isDisplayed();
         } catch (NoSuchElementException | StaleElementReferenceException e) {
             return false;
+        }
+    }
+    protected void acceptAlertIfPresent() {
+        try {
+            waitSeconds(3).until(ExpectedConditions.alertIsPresent());
+            driver.switchTo().alert().accept();
+        } catch (TimeoutException ignored) {
+            // no alert
         }
     }
 
