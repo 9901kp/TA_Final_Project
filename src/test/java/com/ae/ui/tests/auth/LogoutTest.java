@@ -12,17 +12,20 @@ import org.testng.annotations.Test;
 @Listeners(AllureTestListener.class)
 public class LogoutTest extends BaseTest {
 
-    @Test(description = "TC-4: Logout User")
+    @Test(description = "TC-4: Logout User should return to Login page")
     public void logout_shouldReturnToLoginPage() {
+        HomePage home = new HomePage().open();
 
-        HomePage home = new HomePage();
         LoginPage login = home.goToLogin().waitLoaded();
 
-        HomePage afterLogin = login.login(Config.uiEmail(), Config.uiPassword());
-        Assert.assertTrue(afterLogin.isLoggedInBannerVisible(), "Expected to be logged in");
+        HomePage afterLogin = login.loginExpectSuccess(Config.uiEmail(), Config.uiPassword());
 
-        LoginPage afterLogout = afterLogin.logout().waitLoaded();
+        Assert.assertTrue(afterLogin.isLoggedInBannerVisible(),
+                "Expected to be logged in before logout");
 
-        Assert.assertNotNull(afterLogout, "Expected LoginPage after logout");
+        LoginPage afterLogout = afterLogin.logout();
+
+        Assert.assertTrue(afterLogout.isLoginHeaderVisible(),
+                "Expected Login page header to be visible after logout");
     }
 }

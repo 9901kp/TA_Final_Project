@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 
 public class LoginPage extends BasePage {
 
-    // Headers
+    // Header
     private final By loginHeader = By.xpath("//*[contains(text(),'Login to your account')]");
 
     // Inputs
@@ -23,20 +23,47 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    @Step("Login with email={email}")
-    public HomePage login(String email, String password) {
+    public boolean isLoginHeaderVisible() {
+        return isVisible(loginHeader, 5);
+    }
+
+    @Step("Login expect SUCCESS with email={email}")
+    public HomePage loginExpectSuccess(String email, String password) {
         type(emailInput, email);
         type(passwordInput, password);
         click(loginBtn);
-        return new HomePage();
+
+        HomePage home = new HomePage();
+
+        boolean ok = waitAnyVisible(12,
+                home.getLoggedInAsLocator(),
+                invalidLoginError
+        );
+
+        if (isVisible(invalidLoginError, 1)) {
+            throw new AssertionError("Login failed: invalid email/password message appeared.");
+        }
+
+        if (!ok) {
+            throw new AssertionError("Login result not detected: neither 'Logged in as' nor error appeared.");
+        }
+
+        home.waitLoggedInBanner();
+        return home;
+    }
+
+    @Step("Login expect INVALID creds with email={email}")
+    public LoginPage loginExpectInvalid(String email, String password) {
+        type(emailInput, email);
+        type(passwordInput, password);
+        click(loginBtn);
+
+        visible(invalidLoginError);
+        return this;
     }
 
     @Step("Is invalid login error visible?")
     public boolean isInvalidLoginErrorVisible() {
-        try {
-            return visible(invalidLoginError).isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
+        return isVisible(invalidLoginError, 3);
     }
 }

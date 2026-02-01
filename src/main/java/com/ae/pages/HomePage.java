@@ -9,6 +9,7 @@ public class HomePage extends BasePage {
     private final By productsLink = By.cssSelector("a[href='/products']");
     private final By logoutLink = By.cssSelector("a[href='/logout']");
     private final By loggedInAs = By.xpath("//*[contains(text(),'Logged in as')]");
+
     // Contact Us locators
     private final By contactUsLink = By.cssSelector("a[href='/contact_us']");
     private final By nameInput = By.name("name");
@@ -18,14 +19,31 @@ public class HomePage extends BasePage {
     private final By submitButton = By.name("submit");
     private final By successMessage = By.cssSelector(".status.alert-success");
 
+    public By getLoggedInAsLocator() {
+        return loggedInAs;
+    }
 
     public HomePage open(String url) {
         driver.get(url);
         return this;
     }
 
+    public HomePage open() {
+        driver.get("https://automationexercise.com/");
+        return this;
+    }
+
     public String getLoggedInAsText() {
         return text(loggedInAs);
+    }
+
+    public HomePage waitLoggedInBanner() {
+        visible(loggedInAs);
+        return this;
+    }
+
+    public boolean isLoggedInBannerVisible() {
+        return isVisible(loggedInAs, 8);
     }
 
     public LoginPage goToLogin() {
@@ -41,16 +59,6 @@ public class HomePage extends BasePage {
     public LoginPage logout() {
         click(logoutLink);
         return new LoginPage().waitLoaded();
-    }
-
-    public boolean isLoggedInBannerVisible() {
-        return isVisible(loggedInAs);
-    }
-
-    // Open home page (default URL from config)
-    public HomePage open() {
-        driver.get("https://automationexercise.com/");
-        return this;
     }
 
     public HomePage goToContactUs() {
@@ -73,11 +81,9 @@ public class HomePage extends BasePage {
     public void submitContactForm() {
         click(submitButton);
         acceptAlertIfPresent();
-
     }
 
     public boolean isContactSuccessMessageVisible() {
-        return isVisible(successMessage);
+        return isVisible(successMessage, 8);
     }
-
 }

@@ -11,16 +11,15 @@ import org.testng.annotations.Test;
 @Listeners(AllureTestListener.class)
 public class LoginInvalidTest extends BaseTest {
 
-    @Test(description = "TC-3: Login User with incorrect email and password")
+    @Test(description = "TC-3: Login with incorrect email and password should show error")
     public void loginWithInvalidCredentials_shouldShowError() {
+        HomePage home = new HomePage().open();
 
-        LoginPage login = new HomePage()
-                .goToLogin()
-                .waitLoaded();
+        LoginPage login = home.goToLogin().waitLoaded();
 
-        login.login("invalid_email@test.com", "wrong_password");
+        login.loginExpectInvalid("wrong_email@example.com", "wrong_password");
 
         Assert.assertTrue(login.isInvalidLoginErrorVisible(),
-                "Expected error message for invalid login.");
+                "Expected invalid email/password message to be visible");
     }
 }

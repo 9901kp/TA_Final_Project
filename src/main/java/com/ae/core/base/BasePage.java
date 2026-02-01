@@ -152,6 +152,30 @@ public abstract class BasePage {
         }
     }
 
+    protected boolean isVisible(By by, long seconds) {
+        try {
+            return waitSeconds(seconds).until(ExpectedConditions.visibilityOfElementLocated(by)).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
+    /** Wait until ANY locator becomes visible */
+    protected boolean waitAnyVisible(long seconds, By... locators) {
+        try {
+            return waitSeconds(seconds).until(d -> {
+                for (By by : locators) {
+                    try {
+                        for (WebElement el : d.findElements(by)) {
+                            if (el != null && el.isDisplayed()) return true;
+                        }
+                    } catch (Exception ignored) {}
+                }
+                return false;
+            });
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }
