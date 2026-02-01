@@ -27,6 +27,7 @@ public class ProductsPage extends BasePage {
             By.cssSelector(".features_items .productinfo p");
 
     public ProductsPage waitLoaded() {
+        waitUrlContains("products");
         visible(allProductsTitle);
         return this;
     }

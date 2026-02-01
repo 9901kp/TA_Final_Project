@@ -16,6 +16,7 @@ public class AllProductsTest extends BaseTest {
     public void verifyAllProductsAndDetails_shouldShowProductInfo() {
 
         ProductsPage products = new HomePage()
+                .open()
                 .goToProducts()
                 .waitLoaded();
 

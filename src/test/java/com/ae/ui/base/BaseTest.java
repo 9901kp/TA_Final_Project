@@ -17,11 +17,22 @@ public abstract class BaseTest {
         DriverManager.setDriver(driver);
 
         driver.get("https://automationexercise.com/");
-//        System.out.println("URL=" + driver.getCurrentUrl());
-//        System.out.println("TITLE=" + driver.getTitle());
-
+        bypassGoogleVignette(driver);
     }
 
+    private void bypassGoogleVignette(WebDriver driver) {
+        for (int i = 0; i < 5; i++) {
+            String url = driver.getCurrentUrl();
+            if (url != null && url.contains("google_vignette")) {
+                try {
+                    driver.navigate().to("https://automationexercise.com/");
+                    Thread.sleep(400);
+                } catch (Exception ignored) {}
+            } else {
+                break;
+            }
+        }
+    }
 
     @AfterMethod
     public void tearDown() {
