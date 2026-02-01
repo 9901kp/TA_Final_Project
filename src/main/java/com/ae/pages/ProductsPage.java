@@ -27,10 +27,12 @@ public class ProductsPage extends BasePage {
             By.cssSelector(".features_items .productinfo p");
 
     public ProductsPage waitLoaded() {
+        ensureNotOnVignette("https://automationexercise.com/products");
         waitUrlContains("products");
         visible(allProductsTitle);
         return this;
     }
+
 
     public ProductDetailPage openFirstProductDetails() {
         visible(productsList);
@@ -63,4 +65,6 @@ public class ProductsPage extends BasePage {
         }
         return false;
     }
+
+
 }

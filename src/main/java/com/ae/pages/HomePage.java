@@ -61,8 +61,14 @@ public class HomePage extends BasePage {
 
     public ProductsPage goToProducts() {
         click(productsLink);
+
+        if (driver.getCurrentUrl().contains("google_vignette")) {
+            driver.get("https://automationexercise.com/products");
+        }
+
         return new ProductsPage();
     }
+
 
     public LoginPage logout() {
         click(logoutLink);

@@ -178,4 +178,13 @@ public abstract class BasePage {
         }
     }
 
+    protected void ensureNotOnVignette(String expectedUrl) {
+        String url = driver.getCurrentUrl();
+        if (url != null && url.contains("google_vignette")) {
+            driver.get(expectedUrl);
+            waitPageReady();
+        }
+    }
+
+
 }
