@@ -1,11 +1,18 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="AutomationExercise Suite" parallel="classes" thread-count="4">
 
-  <test name="All Tests">
-    <packages>
-      <package name="com.ae.ui.tests.*"/>
-      <package name="com.ae.api.tests.*"/>
-    </packages>
-  </test>
+    <parameter name="browser" value="chrome"/>
+
+    <test name="UI Tests">
+        <packages>
+            <package name="com.ae.ui.tests.*"/>
+        </packages>
+    </test>
+
+    <test name="API Tests">
+        <packages>
+            <package name="com.ae.api.tests.*"/>
+        </packages>
+    </test>
 
 </suite>
